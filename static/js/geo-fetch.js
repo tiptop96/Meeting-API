@@ -1,6 +1,16 @@
 function callback() {
     var adress = document.getElementById('id_adress');
     var searchBox = new google.maps.places.SearchBox(adress);
+    searchBox.addListener('places_changed', function() {        
+        var places = searchBox.getPlaces();
+        console.log(places[0].formatted_address)
+        if (places.length == 0) {
+            return;
+        } else {
+            adress.value = places[0].formatted_address
+        }
+    });  
+
     console.log("Autocomp. live");
 }
 
@@ -28,6 +38,6 @@ function loadScript(url, callback){
 
     }
 
-var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuM6eujTcwnwpkRfvnK0TAreyG_E-s1y8&libraries=places&sensor=false&language=en";
+var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuM6eujTcwnwpkRfvnK0TAreyG_E-s1y8&libraries=places&types=(cities)&sensor=false&language=en";
 
 window.onload = loadScript(url, callback);
